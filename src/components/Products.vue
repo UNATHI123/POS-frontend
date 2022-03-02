@@ -1,0 +1,137 @@
+<template >
+    <div class="shape">
+     <div class="container">
+   <div class="box">
+			<div class="clock">
+        <p>Loading Products!</p>
+      </div>
+  <div class="card"  v-for='product of products' :key="product.id">
+    <img :src="products.img" class="card-img-top" alt="">
+    <div class="card-body">
+      <h5 class="card-title">{{product.title}}</h5>
+      <p class="card-text">{{product.description}}</p>
+    </div>
+    <div class="card-footer">
+     
+    </div>
+  </div>
+</div>	
+		</div>
+     </div>
+    
+</template>
+<script>
+fetch("https://fakestoreapi.com/products")
+    .then((response) => response.json())
+    .then((data) => {
+    console.log(data);
+    });
+
+</script>
+<style  scoped>
+
+* {
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-font-smoothing:antialiased;
+	-moz-font-smoothing:antialiased;
+	-o-font-smoothing:antialiased;
+	font-smoothing:antialiased;
+	text-rendering:optimizeLegibility;
+}
+ .container {
+	max-width:400px;
+	width:100%;
+  position:relative;
+  color: white;
+}
+
+
+.hero-title {
+  max-width: 16em;
+  font-size: 10vh;
+  font-weight: bold;
+  line-height: 0.9;
+  text-transform: uppercase;
+
+}
+@media  only screen and (min-width: 999px) {
+  .hero-title { 
+      margin-top: 80px;
+      } 
+}
+
+@media  only screen and (max-width: 600px) {
+  .hero-title { 
+      margin-top: 80px;
+      font-size: 5vh;
+      display: flex;
+      } 
+}
+.clock{
+	border-radius: 60px;
+	border: 3px solid #fff;
+	height: 80px;
+	width: 80px;
+	position: relative;
+
+    top: 126px;
+	top: -webkit-calc(50% - 43px);
+	top: calc(50% - 43px);
+	left: 35%;
+	left: -webkit-calc(50% - 43px);
+	left: calc(50% - 43px);
+}
+.clock:after{
+	content: "";
+	position: absolute;
+	background-color: #fff;
+	top:2px;
+	left: 48%;
+	height: 38px;
+	width: 4px;
+	border-radius: 5px;
+	-webkit-transform-origin: 50% 97%;
+			transform-origin: 50% 97%;
+	-webkit-animation: grdAiguille 2s linear infinite;
+			animation: grdAiguille 2s linear infinite;
+}
+
+@-webkit-keyframes grdAiguille{
+    0%{-webkit-transform:rotate(0deg);}
+    100%{-webkit-transform:rotate(360deg);}
+}
+
+@keyframes grdAiguille{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
+}
+
+.clock:before{
+	content: "";
+	position: absolute;
+	background-color: #fff;
+	top:6px;
+	left: 48%;
+	height: 35px;
+	width: 4px;
+	border-radius: 5px;
+	-webkit-transform-origin: 50% 94%;
+			transform-origin: 50% 94%;
+	-webkit-animation: ptAiguille 12s linear infinite;
+			animation: ptAiguille 12s linear infinite;
+}
+
+@-webkit-keyframes ptAiguille{
+    0%{-webkit-transform:rotate(0deg);}
+    100%{-webkit-transform:rotate(360deg);}
+}
+
+@keyframes ptAiguille{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
+}
+</style>
