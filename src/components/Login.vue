@@ -5,11 +5,11 @@
         <h2>Log in</h2>
         <p>welcome back</p>
       </div>
-      <Form @submit="handleLogin" :validation-schema="schema" id="contact" >
+      <Form @submit.prevent="handleLogin"  id="contact" >
         <div class="form-group">
             <fieldset>
           <label for="username">Username</label>
-          <Field name="username" type="text" class="form-control" />
+          <Field name="username" type="text" class="form-control" v-model="username" />
           <ErrorMessage name="username" class="error-feedback" />
         </fieldset><br>
         </div>
@@ -17,7 +17,7 @@
         <!-- <div class="form-group"> -->
         <fieldset>
             <label for="password">Password</label>
-            <Field name="password" type="password" class="form-control" />
+            <Field name="password" type="password" class="form-control" v-model="password" />
             <ErrorMessage name="password" class="error-feedback" />
         </fieldset>
         <!-- </div> -->
@@ -54,57 +54,44 @@
           
 </template>
 <script>
-import { Form, Field, ErrorMessage } from "vee-validate";
-import * as yup from "yup";
 export default {
-  name: "Login",
-  components: {
-    Form,
-    Field,
-    ErrorMessage,
-  },
-  data() {
-    const schema = yup.object().shape({
-      username: yup.string().required("Username is required!"),
-      password: yup.string().required("Password is required!"),
-    });
+    data(){
     return {
-      loading: false,
-      message: "",
-      schema,
+      username:"",
+      password:""
+
     };
+
   },
-  computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    },
-  },
-  created() {
-    if (this.loggedIn) {
-      this.$router.push("/profile");
-    }
-  },
+
   methods: {
-    handleLogin(user) {
-      this.loading = true;
-      this.$store.dispatch("auth/login", user).then(
-        () => {
-          this.$router.push("/profile");
-        },
-        (error) => {
-          this.loading = false;
-          this.message =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-        }
-      );
-    },
+   login(){
+      console.log(this.password);
+      fetch('https://backend-pos-project.herokuapp.com/users', {
+  method: 'POST',
+  body: JSON.stringify({
+    username: this.username,
+    email: this.email,
+    password: this.email,
+  }),
+   headers: {
+    'Content-type': 'application/json; charset=UTF-8',
   },
+}).then((response)=>response.json())  
+ .then((json)=>{  
+          console.log(json); 
+        alert("User Logged in");     
+localStorage.setItem("jwt",json.jwt);  
+       this.$router.push({name:"Products"});  
+  }).catch((err)=>{  
+    alert(err);  
+    });  
+  }, 
+  }, 
 };
+
 </script>
+
 <style scoped>
 .section-title h2 {
   font-size: 14px;
@@ -268,5 +255,15 @@ margin-top: 100px;
 margin-top: 100px;
 }
 }
+
+@media only screen  and (max-width: 600px){
+  	.section-title h2{
+ margin: 0 0 20px 0;
+}
+.section-title h2::after{
+  margin: 0;
+}
+}
+
 
 </style>

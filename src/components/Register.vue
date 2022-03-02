@@ -5,19 +5,22 @@
         <h2>SIGN UP</h2>
         <p>Sign Up with Us</p>
       </div>
-  <Form @submit="handleRegister" :validation-schema="schema" id="contact" >  
+  <Form @submit.prevent="register"  id="contact" >  
   <div v-if="!successful">
     <fieldset>
+      <label for="name">username</label>
       <ErrorMessage name="username" class="error-feedback" />
-      <input placeholder=" eg.John Doe" type="text" tabindex="1" class="form-control">
+      <input placeholder=" eg.John Doe" type="text" tabindex="1" class="form-control" v-model="username">
     </fieldset><br>
     <fieldset>
+      <label for="email">Email</label>
       <ErrorMessage name="email" class="error-feedback" /> 
-      <input placeholder="eg.johndoe@gmail.com" type="email" class="form-control" >
+      <input placeholder="eg.johndoe@gmail.com" type="email" class="form-control"  v-model="email" >
     </fieldset><br>
     <fieldset>
+      <label for="password">Password</label>
       <ErrorMessage name="password" class="error-feedback" /> 
-     <input placeholder="eg.@34doejohn" type="password" class="form-control" >
+     <input placeholder="enter your password" type="password" class="form-control" v-model="password" >
     </fieldset><br>
    <button class="btn btn-primary btn-block" :disabled="loading">
               <span
@@ -27,16 +30,14 @@
               Sign Up
            </button>
            <p class="logInText">Already have an account?</p>
-           <router-link :to="{name:'Login'}">
-             <button class="btn btn-success" :disabled="loading">
+           <button class="btn btn-success" :disabled="loading">
               <span
                 v-show="loading"
                 class="spinner-border spinner-border-sm"
-              ></span>
+              >
+              </span>
               Log In
            </button>
-           </router-link>
-           
     </div>
  
     </Form>
@@ -55,76 +56,42 @@
 
 </template>
 <script>
-import { Form, Field, ErrorMessage } from "vee-validate";
-import * as yup from "yup";
 export default {
-  name: "Register",
-  components: {
-    Form,
-    Field,
-    ErrorMessage,
-  },
-  data() {
-    const schema = yup.object().shape({
-      username: yup
-        .string()
-        .required("Username is required!")
-        .min(3, "Must be at least 3 characters!")
-        .max(20, "Must be maximum 20 characters!"),
-      email: yup
-        .string()
-        .required("Email is required!")
-        .email("Email is invalid!")
-        .max(50, "Must be maximum 50 characters!"),
-      password: yup
-        .string()
-        .required("Password is required!")
-        .min(6, "Must be at least 6 characters!")
-        .max(40, "Must be maximum 40 characters!"),
-    });
+  data(){
     return {
-      successful: false,
-      loading: false,
-      message: "",
-      schema,
+      username:"",
+      email:"",
+      password:""
+
     };
   },
-  computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    },
-  },
-  mounted() {
-    if (this.loggedIn) {
-      this.$router.push("/profile");
-    }
-  },
   methods: {
-    handleRegister(user) {
-      this.message = "";
-      this.successful = false;
-      this.loading = true;
-      this.$store.dispatch("auth/register", user).then(
-        (data) => {
-          this.message = data.message;
-          this.successful = true;
-          this.loading = false;
-        },
-        (error) => {
-          this.message =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          this.successful = false;
-          this.loading = false;
-        }
-      );
-    },
+    register(){
+      console.log(this.password);
+      fetch('https://backend-pos-project.herokuapp.com/users', {
+  method: 'POST',
+  body: JSON.stringify({
+    username: this.username,
+    email: this.email,
+    password: this.email,
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
   },
+}).then((response)=>response.json())  
+ .then((json)=>{  
+          console.log(json); 
+        alert("User registered");     
+localStorage.setItem("jwt",json.jwt);  
+       this.$router.push({name:"Products"});  
+  }).catch((err)=>{  
+    alert(err);  
+    });  
+  }, 
+  }, 
 };
 </script>
+
 <style scoped>
 
 .section-title h2 {
@@ -180,8 +147,8 @@ export default {
 
 #contact {
 	background:white;
-	padding:20px;
-	margin:30px 0;
+	padding:15px;
+	margin:50px 0;
   border-radius: 20px;
 }
 
@@ -248,7 +215,7 @@ fieldset {
 
 .logInText{
   margin-top: 10px;
-  font-size: .8rem;;
+  font-size: 10px;
 }
 
 #contact button[type="submit"]:active { box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.5); }

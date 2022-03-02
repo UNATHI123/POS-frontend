@@ -1,31 +1,29 @@
 <template >
     <div class="shape">
      <div class="container">
-   <div class="box">
-			<div class="clock">
-        <p>Loading Products!</p>
-      </div>
   <div class="card"  v-for='product of products' :key="product.id">
-    <img :src="products.img" class="card-img-top" alt="">
+    <img :src="products.image" class="card-img-top" alt="product.image">
     <div class="card-body">
       <h5 class="card-title">{{product.title}}</h5>
       <p class="card-text">{{product.description}}</p>
     </div>
     <div class="card-footer">
-     
+     <h3>{{product.price}}</h3>
+
     </div>
   </div>
 </div>	
 		</div>
-     </div>
+  
     
 </template>
 <script>
-fetch("https://fakestoreapi.com/products")
+fetch("https://backend-pos-project.herokuapp.com/products")
     .then((response) => response.json())
     .then((data) => {
     console.log(data);
-    });
+	});
+
 
 </script>
 <style  scoped>
