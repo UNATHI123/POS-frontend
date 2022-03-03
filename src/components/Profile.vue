@@ -22,6 +22,7 @@
       <li v-for="role in currentUser.roles" :key="role">{{role}}</li>
     </ul>
   </div>
+  
 </template>
 <script>
 export default {
