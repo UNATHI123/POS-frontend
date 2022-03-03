@@ -20,7 +20,7 @@
     <fieldset>
       <label for="password">Password</label>
       <ErrorMessage name="password" class="error-feedback" /> 
-     <input placeholder="enter your password" type="password" class="form-control" v-model="password" >
+     <input  class="form-control" v-model="password" >
     </fieldset><br>
    <button class="btn btn-primary btn-block" :disabled="loading">
               <span
@@ -30,23 +30,23 @@
               Sign Up
            </button>
            <p class="logInText">Already have an account?</p>
-           <button class="btn btn-success" :disabled="loading">
+           <router-link :to="{name:'Login'}">
+              <button class="btn btn-success" :disabled="loading">
               <span
                 v-show="loading"
                 class="spinner-border spinner-border-sm"
               >
               </span>
-              Log In
+              LOG IN
            </button>
+            </router-link>
+           
     </div>
  
     </Form>
 <div>
-</div><div
-        v-if="message"
-        class="alert"
-        :class="successful ? 'alert-success' : 'alert-danger'"
-      >
+</div
+><div v-if="message" class="alert" :class="successful ? 'alert-success' : 'alert-danger'">
         {{ message }}
        </div>
  </div>
@@ -61,13 +61,13 @@ export default {
     return {
       username:"",
       email:"",
-      password:""
+      password:"",
 
     };
   },
   methods: {
     register(){
-      console.log(this.password);
+      // console.log(this.password);
       fetch('https://backend-pos-project.herokuapp.com/users', {
   method: 'POST',
   body: JSON.stringify({
@@ -83,7 +83,7 @@ export default {
           console.log(json); 
         alert("User registered");     
 localStorage.setItem("jwt",json.jwt);  
-       this.$router.push({name:"Products"});  
+       this.$router.push({name:"Login"});  
   }).catch((err)=>{  
     alert(err);  
     });  

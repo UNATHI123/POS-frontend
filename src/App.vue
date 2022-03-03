@@ -42,10 +42,10 @@
     background: linear-gradient(to bottom, #ce0000, #7A0800 70%);
     position: absolute;
     -webkit-clip-path: ellipse(500px 500px at 10% 5%);
-    overflow: hidden;
+    overflow: auto;
 }
 .navbar-transparent {
-    background:transparent;
+    background: linear-gradient(to left, #ce0000, #7A0800 70%);
    
 }
 
@@ -54,14 +54,17 @@
     text-transform: capitalize;
     padding:40px;
     
+    
 }
 
 .navbar-nav>li:hover {
-    border-bottom: px solid #fff
+   
 }
 
-.navbar-nav>.active {
-    border-bottom: px solid #fff
+.navbar-nav>.active li {
+    border-bottom: 4px solid #fff
+
+
 }
 
 .navbar-brand {

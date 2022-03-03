@@ -1,6 +1,6 @@
 import axios from 'axios';
 import authHeader from './auth-header';
-const API_URL = 'url/users';
+const API_URL = 'https://backend-pos-project.herokuapp.com/users';
 class UserService {
   getPublicContent() {
     return axios.get(API_URL + 'all');

@@ -1,33 +1,110 @@
+```
 <template >
     <div class="shape">
      <div class="container">
-  <div class="card"  v-for='product of products' :key="product.id">
-    <img :src="products.image" class="card-img-top" alt="product.image">
-    <div class="card-body">
-      <h5 class="card-title">{{product.title}}</h5>
-      <p class="card-text">{{product.description}}</p>
+		 <div class="section-title">
+		   <p>Sneaker Products</p>
+      </div>
+		    <div class="row align-items-start">
+  <div class="col">
+    <label for="sortCategory" class="form-label" >Choose Category</label>
+    <select id="f-Category" class="form-select" onchange="sortCategory()">
+      <option value="">All</option>
+      <option value="Cocktail" Cocktails>MEN</option>
+        <option value="Vegan">KIDS</option>
+            <option value="Snacks">WOMEN</option>
+    </select>
+     </div>
+    <div class="col">
+       SORT BY
+       <label for="" class="form-label">Name</label>
+       <select id="Filter-Name" class="form-select">
+        <option value="">All</option>
+         <option value="Ascending" >BOOTS</option>
+         <option value="Descending">CASUAL</option>
+		 <option value="Descending">FORMAL</option>
+		 <option value="Descending">FLIP-FLOPS</option>
+           </select>   
+      </div>
+      <div class="col">
+        <label for="" class="form-label">Choose Price</label>
+        <select id="Filter-Price" class="form-select" onchange="sortPrice()">
+          <option value="">All</option>
+          <option value="Ascending" >Ascending</option>
+          <option value="Descending">Descending</option>
+            </select>    
+      </div>
     </div>
-    <div class="card-footer">
-     <h3>{{product.price}}</h3>
+		 <div class="row row-cols-1 row-cols-md-3 g-6">
+				<div class="card pt-3"  v-for='product of products' :key="product.id">
+				<img :src="product.image" class="card-img-top" alt="product.image">
+				<div class="card-body">
+				<h5 class="card-title">{{product.title}}</h5>
+				<p class="card-text">{{product.description}}</p>
+				</div>
+				<div class="card-footer">
+				<h3>R{{product.price}}</h3>
 
-    </div>
+				 <input type="number" min=1 value=1  id="Qty${i}"><br><br>
+				 <router-link :to="{name:'Login'}">
+					   <button type="button" class="btn btn-danger" onclick="">Delete</button>
+				   </router-link>
+                   
+				   <router-link :to="{name:'Login'}">
+					   <button type="button" class="btn btn-success">Add to Cart<i class="bi bi-cart-plus"></i></button>
+				   </router-link>
+        <router-link :to="{name:'Login'}"> 
+			      <button class="btn btn-info" data-bs-toggle="modal">Edit</button>      
+   </router-link>
+				</div>
+			</div>
+			</div>
   </div>
-</div>	
-		</div>
+	</div>
+
+		
   
     
 </template>
 <script>
-fetch("https://backend-pos-project.herokuapp.com/products")
-    .then((response) => response.json())
-    .then((data) => {
-    console.log(data);
-	});
+export default {
+    data() {
+        return {
+			products: [],
+
+			title:"",
+			desccription:"",
+			price:"",
+			image:""
+
+
+			
+        }
+    },
+    mounted() {
+        fetch("https://backend-pos-project.herokuapp.com/products")
+        .then(res => res.json())
+        .then(data => this.products = data)
+        .catch(err => console.log(err.message))
+	
+
+
+	}
+	}
 
 
 </script>
+
+
 <style  scoped>
 
+
+.card{
+	color: black !important;
+}
+ .shape{
+	padding-top: 8rem;
+}
 * {
 	margin:0;
 	padding:0;
@@ -41,19 +118,19 @@ fetch("https://backend-pos-project.herokuapp.com/products")
 	text-rendering:optimizeLegibility;
 }
  .container {
-	max-width:400px;
+	 /* max-width:400px; */
 	width:100%;
   position:relative;
-  color: white;
+  color:white;
 }
 
 
-.hero-title {
-  max-width: 16em;
+.hero-title { 
+	max-width: 16em;
   font-size: 10vh;
   font-weight: bold;
   line-height: 0.9;
-  text-transform: uppercase;
+  text-transform: uppercase; 
 
 }
 @media  only screen and (min-width: 999px) {
@@ -107,6 +184,10 @@ fetch("https://backend-pos-project.herokuapp.com/products")
     0%{transform:rotate(0deg);}
     100%{transform:rotate(360deg);}
 }
+div.card:nth-child(4) {
+ margin-top: 9px;
+
+}
 
 .clock:before{
 	content: "";
@@ -131,5 +212,37 @@ fetch("https://backend-pos-project.herokuapp.com/products")
 @keyframes ptAiguille{
     0%{transform:rotate(0deg);}
     100%{transform:rotate(360deg);}
+} 
+
+.section-title h2 {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0;
+  line-height: 1px;
+  margin: 0 0 20px 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+.section-title h2::after {
+  content: "";
+  width: 120px;
+  height: 1px;
+  display: inline-block;
+  background: white;
+  margin: 4px 10px;
+}
+.section-title p {
+  margin: 0;
+  margin: -15px 0 15px 0;
+  font-size: 36px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+}
+.row {
+	padding:  20px;
 }
 </style>
