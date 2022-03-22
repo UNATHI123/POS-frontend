@@ -1,14 +1,13 @@
 <template>
 <div class="shape"> 
      <header>
-          
          <div class="row">
                 <div class="col-md-6 left-side"> <img src="https://i.imgur.com/jrRBTai.png" class="w-100"> </div>
                 <div class="col-md-6 right-side">
                     <h1 class="animate__zoomIn" >STEP OVERFLOW!!</h1>
-                    <p></p>
+                    <p>FREE DELIVERY</p>
                     <div class="text-center">
-                    <a href="/products " class="btn order-button">VIEW PRODUCTS</a>
+                    <a href="/register " class="btn order-button">SIGN UP</a>
                     <p class="font-monospace">ALREADY HAVE AN ACCOUNT ?</p>
                      <a href="/login " class="btn order-button">LOG IN</a>
               </div>

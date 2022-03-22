@@ -42,7 +42,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/home', '/register', '/login'];
+  const publicPages = ['/login', '/register', '/home'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
   // trying to access a restricted page + not logged in
@@ -52,11 +52,11 @@ router.beforeEach((to, from, next) => {
   if (to.path == '/cart' && !loggedIn) next({ name: 'Register' })
   else next()
 
-  if (authRequired && !loggedIn) {
-    next('/login');
-  } else {
-    next();
-  }
+  // if (authRequired && !loggedIn) {
+  //   next('/login');
+  // } else {
+  //   next();
+  // }
 });
 
 

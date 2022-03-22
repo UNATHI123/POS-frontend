@@ -45,7 +45,7 @@
     overflow: auto;
 }
 .navbar-transparent {
-    background: linear-gradient(to left, #ce0000, #7A0800 70%);
+    background:transparent;
    
 }
 
@@ -54,17 +54,14 @@
     text-transform: capitalize;
     padding:40px;
     
-    
 }
 
 .navbar-nav>li:hover {
-   
+    border-bottom: px solid #fff
 }
 
-.navbar-nav>.active li {
-    border-bottom: 4px solid #fff
-
-
+.navbar-nav>.active {
+    border-bottom: px solid #fff
 }
 
 .navbar-brand {

@@ -5,11 +5,11 @@
         <h2>Log in</h2>
         <p>welcome back</p>
       </div>
-      <Form @submit.prevent="login"  id="contact" >
+      <Form @submit.prevent="handleLogin"  id="contact" >
         <div class="form-group">
             <fieldset>
           <label for="username">Username</label>
-          <input  type="text" class="form-control" v-model="username" />
+          <input type="text" class="form-control" v-model="username" />
           <ErrorMessage name="username" class="error-feedback" />
         </fieldset><br>
         </div>
@@ -17,7 +17,7 @@
         <!-- <div class="form-group"> -->
         <fieldset>
             <label for="password">Password</label>
-            <input  class="form-control" v-model="password" />
+            <input type="text" class="form-control" v-model="password" />
             <ErrorMessage name="password" class="error-feedback" />
         </fieldset>
         <!-- </div> -->
@@ -61,17 +61,17 @@ export default {
       password:""
 
     };
-
   },
 
   methods: {
    login(){
       console.log(this.password);
-      fetch('https://backend-pos-project.herokuapp.com/users/login', {
-  method: 'PUT',
+      fetch('https://backend-pos-project.herokuapp.com/users', {
+  method: 'POST',
   body: JSON.stringify({
     username: this.username,
-    password: this.email,
+    email: this.email,
+    password: this.password,
   }),
    headers: {
     'Content-type': 'application/json; charset=UTF-8',
